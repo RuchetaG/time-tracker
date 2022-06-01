@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Dropdown,
   DropdownToggle,
@@ -6,10 +6,18 @@ import {
   DropdownItem,
 } from "reactstrap";
 
-export const Test = (props: any) => {
+export const CustomDropdown = (props: any) => {
+  const [isOpen, setIsOpen] = useState(true);
+
   return (
     <div className="d-flex justify-content-center p-5">
-      <Dropdown toggle={function noRefCheck() {}}>
+      {`isOpen=${isOpen}`}
+      <Dropdown
+        isOpen={isOpen}
+        toggle={() => {
+          setIsOpen(!isOpen);
+        }}
+      >
         <DropdownToggle caret>Dropdown</DropdownToggle>
         <DropdownMenu>
           <DropdownItem header>Header</DropdownItem>

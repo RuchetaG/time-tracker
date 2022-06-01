@@ -4,7 +4,7 @@ import "./App.css";
 
 import { Link } from "./link-tag";
 import { FormFields } from "./form";
-import { Test } from "./dropdown";
+import { CustomDropdown } from "./dropdown";
 
 const user = [
   {
@@ -23,7 +23,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Test></Test>
+        <CustomDropdown></CustomDropdown>
         {/* <img src={logo} className="App-logo" alt="logo" /> */}
         {/* <FormFields></FormFields> */}
         {/* <p>
