@@ -10,18 +10,18 @@ import {
 } from "reactstrap";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import { CustomDropdown } from "./dropdown";
 
 const SignupSchema = Yup.object().shape({
   firstName: Yup.string()
-    .min(2, "Name should not be empty")
+    .min(1, "Name should be atleast 2 characters long")
     .max(64, "Specified name is too long"),
   lastName: Yup.string()
-    .min(1, "Name should not be empty")
+    .min(2, "Name should be atleast 2 characters long")
     .max(64, "Specified name is too long"),
   email: Yup.string().email("Email is invalid"),
+  dob: Yup.date().max(new Date("01-01-2000"), "Enter date before 01-01-2000"),
 });
-
-const values = ["Mr.", "Mrs", "Miss"];
 
 export const FormFields = (props: any) => {
   return (
@@ -30,6 +30,8 @@ export const FormFields = (props: any) => {
         firstName: "",
         lastName: "",
         email: "",
+        dob: null,
+        picked: "",
       }}
       validationSchema={SignupSchema}
       onSubmit={(values) => {
@@ -37,56 +39,62 @@ export const FormFields = (props: any) => {
         console.log(values);
       }}
     >
-      {({ errors, touched }) => (
+      {({ errors, touched, values }) => (
         <Form>
           <label>Title: </label>
-          <div className="d-flex justify-content-center p-5">
-            <Dropdown toggle={function noRefCheck() {}}>
-              <DropdownToggle caret>Select</DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem>Mr.</DropdownItem>
-                <DropdownItem>Mrs.</DropdownItem>
-                <DropdownItem>Miss</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </div>
+          <CustomDropdown></CustomDropdown>
           <Label check>First Name: </Label>
           <Field name="firstName" />
           {errors.firstName && touched.firstName ? (
             <div>{errors.firstName}</div>
           ) : null}
-          &nbsp;
           <Label check>Last Name: </Label>
           <Field name="lastName" />
           {errors.lastName && touched.lastName ? (
             <div>{errors.lastName}</div>
           ) : null}
-          <br></br>
+          <br />
           <Label check>Email: </Label>
           <Field name="email" type="email" />
           {errors.email && touched.email ? <div>{errors.email}</div> : null}
-          &nbsp;
           <Label>Date of Birth: </Label>
-          <Input
+          <Field
             id="exampleDate"
-            name="date"
+            name="dob"
             placeholder="date placeholder"
             type="date"
           />
-          <br></br>
+          <br />
           <Label>What is your favorite color: </Label>
-          <br></br>
-          <Input name="yes" type="radio" /> <Label check>Blue </Label>
-          <Input name="no" type="radio" /> <Label check>Red</Label>
-          <Input name="no" type="radio" /> <Label check>Black</Label>
-          <Input name="no" type="radio" /> <Label check>White</Label>
-          <Input name="no" type="radio" /> <Label check>Yellow</Label>
-          <br></br>
+          <br />
+          <div role="group" aria-labelledby="my-radio-group">
+            <label>
+              <Field type="radio" name="picked" value="Black" />
+              Black
+            </label>
+            <label>
+              <Field type="radio" name="picked" value="White" />
+              White
+            </label>
+            <div>Picked: {values.picked}</div>
+          </div>
+          <br />
           <Label check>Check me out: </Label>
-          <Input id="checkbox2" type="checkbox" />
-          <br></br>
-          <button type="reset">Reset</button>
-          &nbsp;
+          <div role="group" aria-labelledby="checkbox-group">
+            <label>
+              <Field type="checkbox" name="checked" value="One" />
+              One
+            </label>
+            <label>
+              <Field type="checkbox" name="checked" value="Two" />
+              Two
+            </label>
+            <label>
+              <Field type="checkbox" name="checked" value="Three" />
+              Three
+            </label>
+          </div>
+          <br />
           <button type="submit">Submit</button>
         </Form>
       )}

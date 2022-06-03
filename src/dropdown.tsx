@@ -7,27 +7,21 @@ import {
 } from "reactstrap";
 
 export const CustomDropdown = (props: any) => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="d-flex justify-content-center p-5">
-      {`isOpen=${isOpen}`}
       <Dropdown
         isOpen={isOpen}
         toggle={() => {
           setIsOpen(!isOpen);
         }}
       >
-        <DropdownToggle caret>Dropdown</DropdownToggle>
+        <DropdownToggle caret>Select Value</DropdownToggle>
         <DropdownMenu>
-          <DropdownItem header>Header</DropdownItem>
-          <DropdownItem>Some Action</DropdownItem>
-          <DropdownItem text>Dropdown Item Text</DropdownItem>
-          <DropdownItem disabled>Action (disabled)</DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem>Foo Action</DropdownItem>
-          <DropdownItem>Bar Action</DropdownItem>
-          <DropdownItem>Quo Action</DropdownItem>
+          <DropdownItem>Mr.</DropdownItem>
+          <DropdownItem>Mrs.</DropdownItem>
+          <DropdownItem>Miss</DropdownItem>
         </DropdownMenu>
       </Dropdown>
     </div>
