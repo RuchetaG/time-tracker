@@ -7,6 +7,16 @@ import {
   DropdownItem,
   DropdownToggle,
   DropdownMenu,
+  Card,
+  CardBody,
+  CardSubtitle,
+  CardText,
+  CardTitle,
+  Container,
+  Row,
+  Col,
+  CardHeader,
+  Alert,
 } from "reactstrap";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
@@ -14,7 +24,7 @@ import { CustomDropdown } from "./dropdown";
 
 const SignupSchema = Yup.object().shape({
   firstName: Yup.string()
-    .min(1, "Name should be atleast 2 characters long")
+    .min(2, "Name should be at least 2 characters long")
     .max(64, "Specified name is too long"),
   lastName: Yup.string()
     .min(2, "Name should be atleast 2 characters long")
@@ -41,13 +51,44 @@ export const FormFields = (props: any) => {
     >
       {({ errors, touched, values }) => (
         <Form>
-          <label>Title: </label>
+          <Container className="bg-light border">
+            <Row>
+              <Col>
+                <div>
+                  <Card>
+                    <CardHeader>
+                      <CardTitle tag="h5" className="color-black">
+                        User Registration
+                      </CardTitle>
+                    </CardHeader>
+                    <CardBody>
+                    <Row>
+                        <Col>
+                          <Label className="color-black" check>
+                            First Name:{" "}
+                          </Label>
+                        </Col>
+                        <Col>
+                          <Field name="firstName" />
+                        </Col>
+                        <Col>
+                          <Alert color="danger">
+                            {errors.firstName && touched.firstName ? (
+                              <div>{errors.firstName}</div>
+                            ) : null}
+                          </Alert>
+                        </Col>
+                      </Row>
+
+
+                      <Button>Submit</Button>
+                    </CardBody>
+                  </Card>
+                </div>
+              </Col>
+            </Row>
+          </Container>
           <CustomDropdown></CustomDropdown>
-          <Label check>First Name: </Label>
-          <Field name="firstName" />
-          {errors.firstName && touched.firstName ? (
-            <div>{errors.firstName}</div>
-          ) : null}
           <Label check>Last Name: </Label>
           <Field name="lastName" />
           {errors.lastName && touched.lastName ? (
@@ -64,6 +105,7 @@ export const FormFields = (props: any) => {
             placeholder="date placeholder"
             type="date"
           />
+          {errors.dob && touched.dob ? <div>{errors.dob}</div> : null}
           <br />
           <Label>What is your favorite color: </Label>
           <br />
