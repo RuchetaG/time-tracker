@@ -65,12 +65,7 @@ export const FormFields = () => {
         console.log("Error: ", error);
       });
   };
-
-  function add(x:number, y:number){
-    return x + y
-  }
-  add(123, 34)
-
+  
   return (
     <Formik
       initialValues={{
