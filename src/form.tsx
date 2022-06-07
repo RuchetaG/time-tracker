@@ -32,7 +32,7 @@ const signUpSchema = Yup.object().shape({
     .min(2, "Name should be atleast 2 characters long")
     .max(64, "Specified name is too long"),
   email: Yup.string().email("Email is invalid"),
-  dob: Yup.date().max(new Date("01-01-2030"), "Enter date before 01-01-2000"),
+  dob: Yup.date().max(new Date("01-01-2030"), "Enter date before 01-01-2030"),
   picked: Yup.string().required("Atleast one option should be selected"),
   checked: Yup.array().required("Check one or more"),
 });
@@ -47,7 +47,7 @@ interface UserRegistration {
   firstName: string;
   lastName: string;
   email: string;
-  dob: Date;
+  dob: Date | null;
   picked: string;
   checked: string[];
   address?: IAddress;
@@ -77,7 +77,7 @@ export const FormFields = () => {
         firstName: "",
         lastName: "",
         email: "",
-        dob: new Date(),
+        dob: null,
         picked: "",
         checked: [],
       }}
