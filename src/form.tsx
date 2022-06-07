@@ -23,7 +23,7 @@ import * as Yup from "yup";
 import { CustomDropdown } from "./dropdown";
 import { FormInput } from "./FormInput";
 
-const SignupSchema = Yup.object().shape({
+const signUpSchema = Yup.object().shape({
   firstName: Yup.string()
     .min(2, "Name should be at least 2 characters long")
     .max(64, "Specified name is too long"),
@@ -47,7 +47,7 @@ export const FormFields = (props: any) => {
         picked: "",
         checked: "",
       }}
-      validationSchema={SignupSchema}
+      validationSchema={signUpSchema}
       onSubmit={(values) => {
         // same shape as initial values
         console.log(values);
@@ -83,34 +83,22 @@ export const FormFields = (props: any) => {
                         values={values}
                       ></FormInput>
                       <Row>
-                        <Col>
-                          <Label className="color-black" check>
-                            Last Name:{" "}
-                          </Label>
-                        </Col>
-                        <Col>
-                          <Field name="lastName" />
-                        </Col>
-                        <Col>
-                          {errors.lastName && touched.lastName ? (
-                            <Alert color="danger">{errors.lastName}</Alert>
-                          ) : null}
-                        </Col>
+                        <FormInput
+                          labelText="Last Name: "
+                          name="lastName"
+                          errors={errors}
+                          touched={touched}
+                          values={values}
+                        ></FormInput>
                       </Row>
                       <Row>
-                        <Col>
-                          <Label className="color-black" check>
-                            Email:{" "}
-                          </Label>
-                        </Col>
-                        <Col>
-                          <Field name="email" />
-                        </Col>
-                        <Col>
-                          {errors.email && touched.email ? (
-                            <Alert color="danger">{errors.email}</Alert>
-                          ) : null}
-                        </Col>
+                        <FormInput
+                          labelText="Email: "
+                          name="email"
+                          errors={errors}
+                          touched={touched}
+                          values={values}
+                        ></FormInput>
                       </Row>
                       <Row>
                         <Col>
@@ -198,11 +186,6 @@ export const FormFields = (props: any) => {
               </Col>
             </Row>
           </Container>
-
-          <Label>What is your favorite color: </Label>
-          <br />
-
-          <button type="submit">Submit</button>
         </Form>
       )}
     </Formik>

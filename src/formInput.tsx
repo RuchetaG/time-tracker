@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Label, Card, CardBody, Alert } from "reactstrap";
+import { Row, Col, Label, Alert } from "reactstrap";
 import { Field } from "formik";
 
 export const FormInput = (props: {
@@ -10,24 +10,20 @@ export const FormInput = (props: {
   values: any;
 }) => {
   return (
-    <Card>
-      <CardBody>
-        <Row>
-          <Col>
-            <Label className="color-black" check>
-              {props.labelText}{" "}
-            </Label>
-          </Col>
-          <Col>
-            <Field name={props.name} />
-          </Col>
-          <Col>
-            {errors[name] && touched[name] ? (
-              <Alert color="danger">{errors[name]} </Alert>
-            ) : null}
-          </Col>
-        </Row>
-      </CardBody>
-    </Card>
+    <Row>
+      <Col>
+        <Label className="color-black" check>
+          {props.labelText}{" "}
+        </Label>
+      </Col>
+      <Col>
+        <Field name={props.name} />
+      </Col>
+      <Col>
+        {props.errors[props?.name] && props.touched[props?.name] ? (
+          <Alert color="danger">{props.errors[props?.name]} </Alert>
+        ) : null}
+      </Col>
+    </Row>
   );
 };
