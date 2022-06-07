@@ -22,6 +22,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { CustomDropdown } from "./dropdown";
 import { FormInput } from "./FormInput";
+import axios from "axios";
 
 const signUpSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -31,26 +32,60 @@ const signUpSchema = Yup.object().shape({
     .min(2, "Name should be atleast 2 characters long")
     .max(64, "Specified name is too long"),
   email: Yup.string().email("Email is invalid"),
-  dob: Yup.date().max(new Date("01-01-2000"), "Enter date before 01-01-2000"),
+  dob: Yup.date().max(new Date("01-01-2030"), "Enter date before 01-01-2000"),
   picked: Yup.string().required("Atleast one option should be selected"),
   checked: Yup.array().required("Check one or more"),
 });
 
-export const FormFields = (props: any) => {
+interface IAddress{
+  line1: string;
+  line2: string;
+  city: string;
+}
+
+interface UserRegistration {
+  firstName: string;
+  lastName: string;
+  email: string;
+  dob: Date;
+  picked: string;
+  checked: string[];
+  address?: IAddress;
+}
+
+export const FormFields = () => {
+  const registerUser = (requestPayload: UserRegistration) => {
+    const URL = "http://localhost:4000/api/register";
+    axios
+      .post(URL, requestPayload)
+      .then(function (response) {
+        console.log("success:", response);
+      })
+      .catch(function (error) {
+        console.log("Error: ", error);
+      });
+  };
+
+  function add(x:number, y:number){
+    return x + y
+  }
+  add(123, 34)
+
   return (
     <Formik
       initialValues={{
         firstName: "",
         lastName: "",
         email: "",
-        dob: null,
+        dob: new Date(),
         picked: "",
-        checked: "",
+        checked: [],
       }}
       validationSchema={signUpSchema}
       onSubmit={(values) => {
         // same shape as initial values
         console.log(values);
+        registerUser(values);
       }}
     >
       {({ errors, touched, values }) => (
