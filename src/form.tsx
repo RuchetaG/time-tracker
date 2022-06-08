@@ -21,7 +21,7 @@ import {
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { CustomDropdown } from "./dropdown";
-import { FormInput } from "./FormInput";
+import { FormInput } from "./formInput";
 import axios from "axios";
 
 const signUpSchema = Yup.object().shape({
@@ -37,7 +37,7 @@ const signUpSchema = Yup.object().shape({
   checked: Yup.array().required("Check one or more"),
 });
 
-interface IAddress{
+interface IAddress {
   line1: string;
   line2: string;
   city: string;
@@ -65,7 +65,7 @@ export const FormFields = () => {
         console.log("Error: ", error);
       });
   };
-  
+
   return (
     <Formik
       initialValues={{
