@@ -1,12 +1,5 @@
 import React, { useState } from "react";
 import Select from "react-select";
-import {
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "reactstrap";
-import { countries } from "countries-list";
 
 export const Countries: Option[] = Object.entries(countries).map(
   ([key, value]) => ({
