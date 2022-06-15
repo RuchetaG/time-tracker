@@ -14,7 +14,7 @@ import {
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { CustomDropdown } from "./dropdown";
-import { FormInput } from "./formInput";
+import { FormInput } from "./FormInput";
 import axios from "axios";
 
 const signUpSchema = Yup.object().shape({
