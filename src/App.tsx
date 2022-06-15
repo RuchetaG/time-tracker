@@ -5,9 +5,7 @@ import { Steps } from "antd";
 
 import { Link } from "./link-tag";
 import { FormFields } from "./form";
-import { CustomDropdown } from "./dropdown";
 import { SignUpForm } from "./signup";
-import { COUNTRIES } from "./countries";
 
 const { Step } = Steps;
 
@@ -21,7 +19,6 @@ function App() {
 
   return (
     <div className="App">
-      {/* <SignUpForm></SignUpForm> */}
       <Button
         onClick={() => {
           if (currentStep > 0) setCurrentStep(currentStep - 1);
@@ -46,6 +43,7 @@ function App() {
         <Step title="Waiting" description="This is a description3." />
       </Steps>
       <Alert type="success" message={message}></Alert>
+      <SignUpForm></SignUpForm>
     </div>
   );
 }

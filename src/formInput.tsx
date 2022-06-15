@@ -1,6 +1,8 @@
 import React from "react";
-import { Row, Col, Label, Alert } from "reactstrap";
+import { Row, Col, Typography, Alert } from "antd";
 import { Field } from "formik";
+
+const { Title } = Typography;
 
 export const FormInput = (props: {
   labelText: string;
@@ -12,16 +14,14 @@ export const FormInput = (props: {
   return (
     <Row>
       <Col>
-        <Label className="color-black" check>
-          {props.labelText}{" "}
-        </Label>
+        <Title>{props.labelText} </Title>
       </Col>
       <Col>
         <Field name={props.name} />
       </Col>
       <Col>
         {props.errors[props?.name] && props.touched[props?.name] ? (
-          <Alert color="danger">{props.errors[props?.name]} </Alert>
+          <Alert type="error" message={props.errors[props?.name]} />
         ) : null}
       </Col>
     </Row>

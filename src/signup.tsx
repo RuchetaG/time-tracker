@@ -1,21 +1,12 @@
 import React from "react";
-import {
-  Label,
-  Button,
-  Card,
-  CardBody,
-  CardTitle,
-  Container,
-  Row,
-  Col,
-  CardHeader,
-  Alert,
-} from "reactstrap";
+import { Button, Card, Row, Col, Alert, Typography } from "antd";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { CustomDropdown } from "./dropdown";
-import { FormInput } from "./FormInput";
+import { FormInput } from "./formInput";
 import axios from "axios";
+
+const { Title } = Typography;
 
 const signUpSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -75,83 +66,72 @@ export const SignUpForm = () => {
     >
       {({ errors, touched, values }) => (
         <Form className="container">
-          <Container className="bg-light border" fluid>
-            <Row>
-              <Col>
-                <div>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle tag="h5" className="color-black">
-                        User Onboarding
-                      </CardTitle>
-                    </CardHeader>
-                    <CardBody>
-                      <Row>
-                        <Col className="color-black">
-                          <Label>Title: </Label>
-                        </Col>
-                        <Col>
-                          <CustomDropdown></CustomDropdown>
-                        </Col>
-                        <Col></Col>
-                      </Row>
-                      <FormInput
-                        labelText="First Name: "
-                        name="firstName"
-                        errors={errors}
-                        touched={touched}
-                        values={values}
-                      ></FormInput>
-                      <FormInput
-                        labelText="Last Name: "
-                        name="lastName"
-                        errors={errors}
-                        touched={touched}
-                        values={values}
-                      ></FormInput>
-                      <FormInput
-                        labelText="Email: "
-                        name="email"
-                        errors={errors}
-                        touched={touched}
-                        values={values}
-                      ></FormInput>
-                      <FormInput
-                        labelText="Password: "
-                        name="password"
-                        errors={errors}
-                        touched={touched}
-                        values={values}
-                      ></FormInput>
-                      <FormInput
-                        labelText="City: "
-                        name="cityInput"
-                        errors={errors}
-                        touched={touched}
-                        values={values}
-                      ></FormInput>
-                      <Row>
-                        <Col>
-                          <Label className="color-black" check>
-                            Date of Birth:{" "}
-                          </Label>
-                        </Col>
-                        <Col>
-                          <Field name="dob" type="date" />
-                        </Col>
-                        <Col>
-                          {errors.dob && touched.dob ? (
-                            <Alert color="danger">{errors.dob}</Alert>
-                          ) : null}
-                        </Col>
-                      </Row>
-                      <Button>Submit</Button>
-                    </CardBody>
-                  </Card>
-                </div>
-              </Col>
-            </Row>
-          </Container>
+          <Row>
+            <Col>
+              <div>
+                <Card title=" User Onboarding">
+                  <Row>
+                    <Col className="color-black">
+                      <Title level={5}>Title:</Title>
+                    </Col>
+                    <Col>
+                      <CustomDropdown></CustomDropdown>
+                    </Col>
+                    <Col></Col>
+                  </Row>
+                  <FormInput
+                    labelText="First Name: "
+                    name="firstName"
+                    errors={errors}
+                    touched={touched}
+                    values={values}
+                  ></FormInput>
+                  <FormInput
+                    labelText="Last Name: "
+                    name="lastName"
+                    errors={errors}
+                    touched={touched}
+                    values={values}
+                  ></FormInput>
+                  <FormInput
+                    labelText="Email: "
+                    name="email"
+                    errors={errors}
+                    touched={touched}
+                    values={values}
+                  ></FormInput>
+                  <FormInput
+                    labelText="Password: "
+                    name="password"
+                    errors={errors}
+                    touched={touched}
+                    values={values}
+                  ></FormInput>
+                  <FormInput
+                    labelText="City: "
+                    name="cityInput"
+                    errors={errors}
+                    touched={touched}
+                    values={values}
+                  ></FormInput>
+                  <Row>
+                    <Col>
+                      <Title level={5}>Date of Birth:</Title>
+                    </Col>
+                    <Col>
+                      <Field name="dob" type="date" />
+                    </Col>
+                    <Col>
+                      {errors.dob && touched.dob ? (
+                        <Alert type="error" message={errors.dob} />
+                      ) : null}
+                    </Col>
+                  </Row>
+                  <Button>Submit</Button>
+                </Card>
+              </div>
+            </Col>
+          </Row>
         </Form>
       )}
     </Formik>

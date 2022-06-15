@@ -2,7 +2,7 @@ import { Button, Card, Row, Col, Alert, Typography } from "antd";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { CustomDropdown } from "./dropdown";
-import { FormInput } from "./FormInput";
+import { FormInput } from "./formInput";
 import axios from "axios";
 
 const { Title } = Typography;
