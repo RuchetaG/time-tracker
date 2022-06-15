@@ -1,29 +1,11 @@
-import React from "react";
-import {
-  Label,
-  Input,
-  Button,
-  Dropdown,
-  DropdownItem,
-  DropdownToggle,
-  DropdownMenu,
-  Card,
-  CardBody,
-  CardSubtitle,
-  CardText,
-  CardTitle,
-  Container,
-  Row,
-  Col,
-  CardHeader,
-  Alert,
-} from "reactstrap";
+import { Button, Card, Row, Col, Alert, Typography } from "antd";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { CustomDropdown } from "./dropdown";
 import { FormInput } from "./FormInput";
 import axios from "axios";
 
+const { Title } = Typography;
 const signUpSchema = Yup.object().shape({
   firstName: Yup.string()
     .min(2, "Name should be at least 2 characters long")
@@ -85,137 +67,110 @@ export const FormFields = () => {
     >
       {({ errors, touched, values }) => (
         <Form className="container">
-          <Container className="bg-light border" fluid>
-            <Row>
-              <Col>
-                <div>
-                  <Card>
-                    <CardHeader>
-                      <CardTitle tag="h5" className="color-black">
-                        User Registration
-                      </CardTitle>
-                    </CardHeader>
-                    <CardBody>
-                      <Row>
-                        <Col className="color-black">
-                          <Label>Title: </Label>
+          <Row>
+            <Col>
+              <div>
+                <Card title="User Registration">
+                  <Row>
+                    <Col className="color-black">
+                      <Title level={5}>Title:</Title>
+                    </Col>
+                    <Col>
+                      <CustomDropdown></CustomDropdown>
+                    </Col>
+                    <Col></Col>
+                  </Row>
+                  <FormInput
+                    labelText="First Name: "
+                    name="firstName"
+                    errors={errors}
+                    touched={touched}
+                    values={values}
+                  ></FormInput>
+                  <Row>
+                    <FormInput
+                      labelText="Last Name: "
+                      name="lastName"
+                      errors={errors}
+                      touched={touched}
+                      values={values}
+                    ></FormInput>
+                  </Row>
+                  <Row>
+                    <FormInput
+                      labelText="Email: "
+                      name="email"
+                      errors={errors}
+                      touched={touched}
+                      values={values}
+                    ></FormInput>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <Title level={5}>Date of Birth: </Title>
+                    </Col>
+                    <Col>
+                      <Field name="dob" type="date" />
+                    </Col>
+                    <Col>
+                      {errors.dob && touched.dob ? (
+                        <Alert type="error" message={errors.dob} />
+                      ) : null}
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <Title level={5}>What is your favorite color:</Title>
+                    </Col>
+                    <Col>
+                      <Row className="color-black">
+                        <Col>
+                          <Field name="picked" type="radio" value="Black" />
+                          Black
                         </Col>
                         <Col>
-                          <CustomDropdown></CustomDropdown>
-                        </Col>
-                        <Col></Col>
-                      </Row>
-                      <FormInput
-                        labelText="First Name: "
-                        name="firstName"
-                        errors={errors}
-                        touched={touched}
-                        values={values}
-                      ></FormInput>
-                      <Row>
-                        <FormInput
-                          labelText="Last Name: "
-                          name="lastName"
-                          errors={errors}
-                          touched={touched}
-                          values={values}
-                        ></FormInput>
-                      </Row>
-                      <Row>
-                        <FormInput
-                          labelText="Email: "
-                          name="email"
-                          errors={errors}
-                          touched={touched}
-                          values={values}
-                        ></FormInput>
-                      </Row>
-                      <Row>
-                        <Col>
-                          <Label className="color-black" check>
-                            Date of Birth:{" "}
-                          </Label>
-                        </Col>
-                        <Col>
-                          <Field name="dob" type="date" />
-                        </Col>
-                        <Col>
-                          {errors.dob && touched.dob ? (
-                            <Alert color="danger">{errors.dob}</Alert>
-                          ) : null}
-                        </Col>
-                      </Row>
-                      <Row>
-                        <Col>
-                          <Label className="color-black" check>
-                            What is your favorite color:{" "}
-                          </Label>
-                        </Col>
-                        <Col>
-                          <Row className="color-black">
-                            <Col>
-                              <Field name="picked" type="radio" value="Black" />
-                              Black
-                            </Col>
-                            <Col>
-                              <Field name="picked" type="radio" value="White" />
-                              White
-                            </Col>
-                          </Row>
-                        </Col>
-                        <Col>
-                          {errors.picked && touched.picked ? (
-                            <Alert color="danger">{errors.picked}</Alert>
-                          ) : null}
+                          <Field name="picked" type="radio" value="White" />
+                          White
                         </Col>
                       </Row>
-                      <Row>
+                    </Col>
+                    <Col>
+                      {errors.picked && touched.picked ? (
+                        <Alert message={errors.picked} type="error" />
+                      ) : null}
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <Title level={5}>Check me out:</Title>
+                    </Col>
+                    <Col>
+                      <Row className="color-black">
                         <Col>
-                          <Label className="color-black" check>
-                            Check me out:{" "}
-                          </Label>
+                          <Field type="checkbox" name="checked" value="One" />
+                          One
                         </Col>
                         <Col>
-                          <Row className="color-black">
-                            <Col>
-                              <Field
-                                type="checkbox"
-                                name="checked"
-                                value="One"
-                              />
-                              One
-                            </Col>
-                            <Col>
-                              <Field
-                                type="checkbox"
-                                name="checked"
-                                value="Two"
-                              />
-                              Two
-                            </Col>
-                            <Col>
-                              <Field
-                                type="checkbox"
-                                name="checked"
-                                value="Three"
-                              />
-                              Three
-                            </Col>
-                          </Row>
+                          <Field type="checkbox" name="checked" value="Two" />
+                          Two
                         </Col>
                         <Col>
-                          {errors.checked && touched.checked ? (
-                            <Alert color="danger">{errors.checked}</Alert>
-                          ) : null}
+                          <Field type="checkbox" name="checked" value="Three" />
+                          Three
                         </Col>
                       </Row>
-                      <Button>Submit</Button>
-                    </CardBody>
-                  </Card>
-                </div>
-              </Col>
-            </Row>
-          </Container>
+                    </Col>
+                    <Col>
+                      {errors.checked && touched.checked ? (
+                        <Alert message={errors.checked} type="error" />
+                      ) : null}
+                    </Col>
+                  </Row>
+                  <Button>Submit</Button>
+                </Card>
+              </div>
+            </Col>
+          </Row>
         </Form>
       )}
     </Formik>

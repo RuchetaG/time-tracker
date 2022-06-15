@@ -1,11 +1,5 @@
 import React, { useState } from "react";
 import Select from "react-select";
-import {
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "reactstrap";
 
 const options = [
   {
