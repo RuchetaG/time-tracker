@@ -7,6 +7,8 @@ import { Link } from "./link-tag";
 import { FormFields } from "./form";
 import { SignUpForm } from "./signup";
 
+import { ReactHooks } from "./ReactHooks";
+
 const { Step } = Steps;
 
 function App() {
@@ -19,7 +21,8 @@ function App() {
 
   return (
     <div className="App">
-      <Button
+      <ReactHooks></ReactHooks>
+      {/* <Button
         onClick={() => {
           if (currentStep > 0) setCurrentStep(currentStep - 1);
         }}
@@ -43,7 +46,7 @@ function App() {
         <Step title="Waiting" description="This is a description3." />
       </Steps>
       <Alert type="success" message={message}></Alert>
-      <SignUpForm></SignUpForm>
+      <SignUpForm></SignUpForm> */}
     </div>
   );
 }
