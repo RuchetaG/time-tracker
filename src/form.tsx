@@ -1,93 +1,176 @@
-import React from "react";
-import {
-  Label,
-  Input,
-  Button,
-  Dropdown,
-  DropdownItem,
-  DropdownToggle,
-  DropdownMenu,
-} from "reactstrap";
+import { Button, Card, Row, Col, Alert, Typography } from "antd";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import { CustomDropdown } from "./dropdown";
+import { FormInput } from "./formInput";
+import axios from "axios";
 
-const SignupSchema = Yup.object().shape({
+const { Title } = Typography;
+const signUpSchema = Yup.object().shape({
   firstName: Yup.string()
-    .min(2, "Name should not be empty")
+    .min(2, "Name should be at least 2 characters long")
     .max(64, "Specified name is too long"),
   lastName: Yup.string()
-    .min(1, "Name should not be empty")
+    .min(2, "Name should be atleast 2 characters long")
     .max(64, "Specified name is too long"),
   email: Yup.string().email("Email is invalid"),
+  dob: Yup.date().max(new Date("01-01-2030"), "Enter date before 01-01-2030"),
+  picked: Yup.string().required("Atleast one option should be selected"),
+  checked: Yup.array().required("Check one or more"),
 });
 
-const values = ["Mr.", "Mrs", "Miss"];
+interface IAddress {
+  line1: string;
+  line2: string;
+  city: string;
+}
 
-export const FormFields = (props: any) => {
+interface UserRegistration {
+  firstName: string;
+  lastName: string;
+  email: string;
+  dob: Date | null;
+  picked: string;
+  checked: string[];
+  address?: IAddress;
+}
+
+export const FormFields = () => {
+  const registerUser = (requestPayload: UserRegistration) => {
+    const URL = "http://localhost:4000/api/register";
+    axios
+      .post(URL, requestPayload)
+      .then(function (response) {
+        console.log("success:", response);
+      })
+      .catch(function (error) {
+        console.log("Error: ", error);
+      });
+  };
+
   return (
     <Formik
       initialValues={{
         firstName: "",
         lastName: "",
         email: "",
+        dob: null,
+        picked: "",
+        checked: [],
       }}
-      validationSchema={SignupSchema}
+      validationSchema={signUpSchema}
       onSubmit={(values) => {
         // same shape as initial values
         console.log(values);
+        registerUser(values);
       }}
     >
-      {({ errors, touched }) => (
-        <Form>
-          <label>Title: </label>
-          <div className="d-flex justify-content-center p-5">
-            <Dropdown toggle={function noRefCheck() {}}>
-              <DropdownToggle caret>Select</DropdownToggle>
-              <DropdownMenu>
-                <DropdownItem>Mr.</DropdownItem>
-                <DropdownItem>Mrs.</DropdownItem>
-                <DropdownItem>Miss</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </div>
-          <Label check>First Name: </Label>
-          <Field name="firstName" />
-          {errors.firstName && touched.firstName ? (
-            <div>{errors.firstName}</div>
-          ) : null}
-          &nbsp;
-          <Label check>Last Name: </Label>
-          <Field name="lastName" />
-          {errors.lastName && touched.lastName ? (
-            <div>{errors.lastName}</div>
-          ) : null}
-          <br></br>
-          <Label check>Email: </Label>
-          <Field name="email" type="email" />
-          {errors.email && touched.email ? <div>{errors.email}</div> : null}
-          &nbsp;
-          <Label>Date of Birth: </Label>
-          <Input
-            id="exampleDate"
-            name="date"
-            placeholder="date placeholder"
-            type="date"
-          />
-          <br></br>
-          <Label>What is your favorite color: </Label>
-          <br></br>
-          <Input name="yes" type="radio" /> <Label check>Blue </Label>
-          <Input name="no" type="radio" /> <Label check>Red</Label>
-          <Input name="no" type="radio" /> <Label check>Black</Label>
-          <Input name="no" type="radio" /> <Label check>White</Label>
-          <Input name="no" type="radio" /> <Label check>Yellow</Label>
-          <br></br>
-          <Label check>Check me out: </Label>
-          <Input id="checkbox2" type="checkbox" />
-          <br></br>
-          <button type="reset">Reset</button>
-          &nbsp;
-          <button type="submit">Submit</button>
+      {({ errors, touched, values }) => (
+        <Form className="container">
+          <Row>
+            <Col>
+              <div>
+                <Card title="User Registration">
+                  <Row>
+                    <Col className="color-black">
+                      <Title level={5}>Title:</Title>
+                    </Col>
+                    <Col>
+                      <CustomDropdown></CustomDropdown>
+                    </Col>
+                    <Col></Col>
+                  </Row>
+                  <FormInput
+                    labelText="First Name: "
+                    name="firstName"
+                    errors={errors}
+                    touched={touched}
+                    values={values}
+                  ></FormInput>
+                  <Row>
+                    <FormInput
+                      labelText="Last Name: "
+                      name="lastName"
+                      errors={errors}
+                      touched={touched}
+                      values={values}
+                    ></FormInput>
+                  </Row>
+                  <Row>
+                    <FormInput
+                      labelText="Email: "
+                      name="email"
+                      errors={errors}
+                      touched={touched}
+                      values={values}
+                    ></FormInput>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <Title level={5}>Date of Birth: </Title>
+                    </Col>
+                    <Col>
+                      <Field name="dob" type="date" />
+                    </Col>
+                    <Col>
+                      {errors.dob && touched.dob ? (
+                        <Alert type="error" message={errors.dob} />
+                      ) : null}
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <Title level={5}>What is your favorite color:</Title>
+                    </Col>
+                    <Col>
+                      <Row className="color-black">
+                        <Col>
+                          <Field name="picked" type="radio" value="Black" />
+                          Black
+                        </Col>
+                        <Col>
+                          <Field name="picked" type="radio" value="White" />
+                          White
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col>
+                      {errors.picked && touched.picked ? (
+                        <Alert message={errors.picked} type="error" />
+                      ) : null}
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <Title level={5}>Check me out:</Title>
+                    </Col>
+                    <Col>
+                      <Row className="color-black">
+                        <Col>
+                          <Field type="checkbox" name="checked" value="One" />
+                          One
+                        </Col>
+                        <Col>
+                          <Field type="checkbox" name="checked" value="Two" />
+                          Two
+                        </Col>
+                        <Col>
+                          <Field type="checkbox" name="checked" value="Three" />
+                          Three
+                        </Col>
+                      </Row>
+                    </Col>
+                    <Col>
+                      {errors.checked && touched.checked ? (
+                        <Alert message={errors.checked} type="error" />
+                      ) : null}
+                    </Col>
+                  </Row>
+                  <Button>Submit</Button>
+                </Card>
+              </div>
+            </Col>
+          </Row>
         </Form>
       )}
     </Formik>
